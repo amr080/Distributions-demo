@@ -1,0 +1,40 @@
+module ClosedEndFund where
+
+import DA.Finance.Asset
+import DA.Finance.Types
+import Daml.Script
+
+-- Template for the closed-end fund.
+template ClosedEndFund
+  with
+    issuer : Party
+    investors : [Party]
+    assetValuation : Decimal
+    dividendAmount : Decimal
+  where
+    signatory issuer
+
+    -- A choice to distribute dividends to investors.
+    choice DistributeDividends : ()
+      with
+        operator : Party
+      controller operator
+      do
+        assert (operator == issuer)
+        forA investors (\investor -> do
+          create DividendPayment with payee = investor; amount = dividendAmount)
+
+-- Template to represent a dividend payment.
+template DividendPayment
+  with
+    payee : Party
+    amount : Decimal
+  where
+    signatory payee
+    observer payee
+
+    -- Auto-archive after acknowledging receipt.
+    choice AcknowledgeReceipt : ()
+      controller payee
+      do
+        return ()

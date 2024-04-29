@@ -26,3 +26,9 @@ The repository consists of the following primary components:
 # Use Cases
 1. The issuer of the fund can execute the DistributeDividends choice to send dividends to all registered investors.
 2. Each investor receives a DividendPayment contract which they can acknowledge, thus confirming receipt of their dividend.
+
+
+--
+Website: https://xft.framer.website/
+Docs: https://xft-docs.gitbook.io/xft-docs
+Email: alex@alexandros-securities.com
